@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دایره‌المعارف اندیکاتورهای تکنیکال</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        },
+                        neon: {
+                            green: '#10b981',
+                            blue: '#3b82f6',
+                            pink: '#ec4899',
+                            purple: '#8b5cf6',
+                            yellow: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 350px;
+            max-height: 400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .tree-node {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #3b82f6;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            position: relative;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tree-node:hover {
+            transform: translateY(-2px);
+            border-color: #ec4899;
+        }
+
+        .connector-v {
+            width: 2px;
+            background-color: #475569;
+            margin: 0 auto;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-navy-900 text-slate-200 font-sans leading-relaxed selection:bg-neon-pink selection:text-white">
+
+    <header class="bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border-b border-navy-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-center md:text-right">
+                    <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-l from-neon-blue to-neon-green mb-2">
+                        دایره‌المعارف اندیکاتورها
+                    </h1>
+                    <p class="text-slate-400 text-sm md:text-base">
+                        راهنمای جامع تحلیل تکنیکال: از میانگین‌های متحرک تا اسیلاتورهای پیشرفته
+                    </p>
+                </div>
+                
+                <div class="flex gap-4 text-xs font-mono bg-navy-900 p-2 rounded-lg border border-navy-700">
+                    <div class="flex items-center gap-1"><span class="text-neon-green">●</span> روند</div>
+                    <div class="flex items-center gap-1"><span class="text-neon-pink">●</span> نوسان‌گر</div>
+                    <div class="flex items-center gap-1"><span class="text-neon-yellow">●</span> حجم</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 space-y-16">
+
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-7 space-y-4">
+                <div class="bg-navy-800 p-6 rounded-xl border-r-4 border-neon-blue shadow-lg">
+                    <h2 class="text-2xl font-bold text-white mb-4">اندیکاتور چیست؟</h2>
+                    <p class="text-slate-300 text-justify">
+                        اندیکاتورها ابزارهای ریاضی هستند که بر اساس داده‌های گذشته بازار، اطلاعاتی را پردازش کرده و روی نمودار نمایش می‌دهند.
+                    </p>
+                    <ul class="list-disc list-inside mt-4 space-y-2 text-slate-300 marker:text-neon-blue">
+                        <li><strong>پیشرو (Leading):</strong> سیگنال را قبل از تغییر قیمت صادر می‌کنند.</li>
+                        <li><strong>تاخیردار (Lagging):</strong> پس از تثبیت روند سیگنال می‌دهند.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="md:col-span-5">
+                <div class="bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700">
+                    <h3 class="text-center text-neon-blue font-bold mb-4">مکانیزم عملکرد</h3>
+                    <div class="flex flex-col gap-2">
+                        <div class="bg-navy-700 p-3 rounded text-center border border-slate-600">داده خام</div>
+                        <div class="flex justify-center text-neon-pink text-xl">▼</div>
+                        <div class="bg-navy-900 p-3 rounded text-center border border-neon-pink font-mono text-neon-pink">فرمول ریاضی</div>
+                        <div class="flex justify-center text-neon-green text-xl">▼</div>
+                        <div class="bg-navy-700 p-3 rounded text-center border border-slate-600">سیگنال بصری</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-8 bg-neon-green rounded"></div>
+                <h2 class="text-3xl font-bold text-white">اندیکاتورهای تعقیب روند</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="space-y-6">
+                    <div class="bg-navy-800 p-5 rounded-lg border-t-2 border-neon-green">
+                        <h3 class="text-xl font-bold text-neon-green mb-2">Moving Average</h3>
+                        <p class="text-slate-300 text-sm text-justify">
+                            میانگین قیمت در یک بازه زمانی مشخص. EMA سریع‌تر و SMA نرم‌تر عمل می‌کند.
+                        </p>
+                    </div>
+                    <div class="bg-navy-800 p-5 rounded-lg border-t-2 border-neon-green">
+                        <h3 class="text-xl font-bold text-neon-green mb-2">MACD</h3>
+                        <p class="text-slate-300 text-sm text-justify">
+                            ترکیبی از دو میانگین متحرک که قدرت و جهت روند را با خطوط و هیستوگرام نشان می‌دهد.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700 flex flex-col">
+                    <h3 class="text-lg font-bold text-white mb-4">مقایسه واکنش SMA و EMA</h3>
+                    <div class="chart-container flex-grow">
+                        <canvas id="maChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-8 bg-neon-pink rounded"></div>
+                <h2 class="text-3xl font-bold text-white">اسیلاتورها (نوسان‌گرها)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-7 bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700">
+                    <h3 class="text-lg font-bold text-white mb-4">شبیه‌سازی RSI</h3>
+                    <div class="chart-container">
+                        <canvas id="rsiChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 grid grid-cols-1 gap-4">
+                    <div class="bg-navy-800 p-4 rounded-lg border-l-4 border-neon-pink">
+                        <h4 class="text-lg font-bold text-neon-pink">RSI</h4>
+                        <p class="text-sm text-slate-300">شناسایی اشباع خرید و فروش در محدوده ۰ تا ۱۰۰.</p>
+                    </div>
+                    <div class="bg-navy-800 p-4 rounded-lg border-l-4 border-neon-pink">
+                        <h4 class="text-lg font-bold text-neon-pink">Stochastic</h4>
+                        <p class="text-sm text-slate-300">حساسیت بالاتر نسبت به RSI برای بازارهای رنج.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-8 bg-neon-blue rounded"></div>
+                <h2 class="text-3xl font-bold text-white">نوسان و حجم</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-navy-800 rounded-xl p-6 border border-navy-700">
+                    <h3 class="text-xl font-bold text-neon-blue mb-4">⚡ نوسان (Volatility)</h3>
+                    <div class="chart-container h-64">
+                        <canvas id="volatilityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-navy-800 rounded-xl p-6 border border-navy-700">
+                    <h3 class="text-xl font-bold text-neon-yellow mb-4">📊 حجم (Volume)</h3>
+                    <div class="bg-navy-900 p-4 rounded border border-navy-700 h-64 flex flex-col justify-end gap-1 relative overflow-hidden">
+                        <div class="flex items-end justify-between h-full gap-1">
+                            <div class="w-full bg-red-900/50 h-[40%] rounded-t"></div>
+                            <div class="w-full bg-green-900/50 h-[60%] rounded-t"></div>
+                            <div class="w-full bg-green-900/50 h-[30%] rounded-t"></div>
+                            <div class="w-full bg-red-900/50 h-[80%] rounded-t"></div>
+                            <div class="w-full bg-green-900/50 h-[90%] rounded-t"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-500 text-sm py-8 border-t border-navy-800">
+            <p>اینفوگرافیک جامع اندیکاتورهای تکنیکال | ۲۰۲۴</p>
+        </footer>
+
+    </main>
+
+    <script>
+        function wrapLabel(label) {
+            const maxLen = 16;
+            if (label.length <= maxLen) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxLen) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        const commonTooltip = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    return Array.isArray(label) ? label.join(' ') : label;
+                }
+            }
+        };
+
+        // MA Chart
+        const ctxMA = document.getElementById('maChart').getContext('2d');
+        new Chart(ctxMA, {
+            type: 'line',
+            data: {
+                labels: ['روز ۱', 'روز ۲', 'روز ۳', 'روز ۴', 'روز ۵', 'روز ۶', 'روز ۷', 'روز ۸'].map(l => wrapLabel(l)),
+                datasets: [
+                    { label: 'Price', data: [100, 105, 110, 108, 115, 125, 120, 130], borderColor: '#fff', borderWidth: 2 },
+                    { label: 'EMA', data: [100, 103, 106, 107, 110, 118, 119, 124], borderColor: '#10b981', borderDash: [5, 5] },
+                    { label: 'SMA', data: [100, 101, 103, 105, 107, 110, 113, 116], borderColor: '#ec4899' }
+                ]
+            },
+            options: { 
+                responsive: true, maintainAspectRatio: false,
+                plugins: { tooltip: commonTooltip, legend: { labels: { color: '#94a3b8', font: {family: 'Vazirmatn'} } } }
+            }
+        });
+
+        // RSI Chart
+        const ctxRSI = document.getElementById('rsiChart').getContext('2d');
+        new Chart(ctxRSI, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 15}, (_, idx) => `کندل ${idx + 1}`).map(l => wrapLabel(l)),
+                datasets: [{
+                    label: 'RSI',
+                    data: [40, 45, 60, 75, 82, 70, 55, 40, 30, 25, 35, 50, 45, 60, 55],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true
+                }]
+            },
+            options: { 
+                responsive: true, maintainAspectRatio: false,
+                plugins: { tooltip: commonTooltip }
+            }
+        });
+
+        // Volatility Chart
+        const ctxVol = document.getElementById('volatilityChart').getContext('2d');
+        new Chart(ctxVol, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 10}, (_, idx) => `زمان ${idx + 1}`).map(l => wrapLabel(l)),
+                datasets: [
+                    { data: [110, 105, 103, 115, 130, 135, 125, 115, 110, 115], borderColor: '#10b981', pointRadius: 0, fill: false },
+                    { data: [90, 95, 97, 85, 70, 65, 75, 85, 90, 85], borderColor: '#10b981', pointRadius: 0, fill: '-1', backgroundColor: 'rgba(16, 185, 129, 0.1)' }
+                ]
+            },
+            options: { 
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>
