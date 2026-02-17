@@ -3,25 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دایره‌المعارف کامل الگوهای هارمونیک</title>
+    <title>دایره‌المعارف اندیکاتورهای تکنیکال</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Vazirmatn', 'sans-serif'] },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
                     colors: {
-                        brand: {
-                            dark: '#0f172a',
-                            primary: '#6366f1',
-                            accent: '#f43f5e',
-                            gold: '#fbbf24',
-                            emerald: '#10b981'
+                        navy: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        },
+                        neon: {
+                            green: '#10b981',
+                            blue: '#3b82f6',
+                            pink: '#ec4899',
+                            purple: '#8b5cf6',
+                            yellow: '#f59e0b'
                         }
                     }
                 }
@@ -33,255 +47,281 @@
         .chart-container {
             position: relative;
             width: 100%;
-            height: 280px;
+            max-width: 100%;
+            height: 350px;
+            max-height: 400px;
+            margin: 0 auto;
         }
-        .pattern-card {
-            transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
         }
-        .pattern-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            border-color: #6366f1;
+
+        .tree-node {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #3b82f6;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            position: relative;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        .gemini-sparkle {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #f43f5e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        
+        .tree-node:hover {
+            transform: translateY(-2px);
+            border-color: #ec4899;
         }
-        .loading-dots:after {
-            content: '.';
-            animation: dots 1.5s steps(5, end) infinite;
+
+        .connector-v {
+            width: 2px;
+            background-color: #475569;
+            margin: 0 auto;
         }
-        @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } 80%, 100% { content: ''; } }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900">
+<body class="bg-navy-900 text-slate-200 font-sans leading-relaxed selection:bg-neon-pink selection:text-white">
 
-    <!-- Hero Header -->
-    <header class="bg-brand-dark text-white py-16 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-64 h-64 bg-brand-primary rounded-full filter blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-accent rounded-full filter blur-3xl"></div>
-        </div>
-        <div class="container mx-auto px-4 relative z-10 text-center">
-            <span class="inline-block px-4 py-1 bg-brand-primary/20 text-brand-primary rounded-full text-sm font-bold mb-4">نسخه نهایی و جامع</span>
-            <h1 class="text-4xl md:text-6xl font-black mb-6">دایره‌المعارف الگوهای هارمونیک</h1>
-            <p class="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-                تحلیل هندسی پیشرفته بازار با استفاده از هوش مصنوعی <span class="gemini-sparkle font-bold">Gemini 2.5</span>. 
-                تمامی الگوهای شناخته شده در یک نگاه.
-            </p>
+    <header class="bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border-b border-navy-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-center md:text-right">
+                    <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-l from-neon-blue to-neon-green mb-2">
+                        دایره‌المعارف اندیکاتورها
+                    </h1>
+                    <p class="text-slate-400 text-sm md:text-base">
+                        راهنمای جامع تحلیل تکنیکال: از میانگین‌های متحرک تا اسیلاتورهای پیشرفته
+                    </p>
+                </div>
+                
+                <div class="flex gap-4 text-xs font-mono bg-navy-900 p-2 rounded-lg border border-navy-700">
+                    <div class="flex items-center gap-1"><span class="text-neon-green">●</span> روند</div>
+                    <div class="flex items-center gap-1"><span class="text-neon-pink">●</span> نوسان‌گر</div>
+                    <div class="flex items-center gap-1"><span class="text-neon-yellow">●</span> حجم</div>
+                </div>
+            </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-12">
+    <main class="container mx-auto px-4 py-8 space-y-16">
 
-        <!-- AI Assistant Global Section -->
-        <section class="mb-16 bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
-            <div class="grid grid-cols-1 lg:grid-cols-12">
-                <div class="lg:col-span-4 bg-slate-900 p-8 text-white">
-                    <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-                        <span>✨</span> تشخیص هوشمند الگو
-                    </h2>
-                    <p class="text-slate-400 text-sm mb-8">نسبت‌های فیبوناچی را وارد کنید تا Gemini مدل الگو را تشخیص داده و استراتژی ورود/خروج را تولید کند.</p>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">نسبت B به XA</label>
-                            <input id="inB" type="number" step="0.001" class="w-full bg-slate-800 border-none rounded-xl p-3 text-white focus:ring-2 focus:ring-brand-primary transition-all" placeholder="مثلا 0.618">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">نسبت D به XA</label>
-                            <input id="inD" type="number" step="0.001" class="w-full bg-slate-800 border-none rounded-xl p-3 text-white focus:ring-2 focus:ring-brand-primary transition-all" placeholder="مثلا 0.786">
-                        </div>
-                        <button id="btnAiScan" class="w-full py-4 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-black transition-all shadow-lg shadow-brand-primary/30">
-                            اسکن و تحلیل هوشمند
-                        </button>
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-7 space-y-4">
+                <div class="bg-navy-800 p-6 rounded-xl border-r-4 border-neon-blue shadow-lg">
+                    <h2 class="text-2xl font-bold text-white mb-4">اندیکاتور چیست؟</h2>
+                    <p class="text-slate-300 text-justify">
+                        اندیکاتورها ابزارهای ریاضی هستند که بر اساس داده‌های گذشته بازار، اطلاعاتی را پردازش کرده و روی نمودار نمایش می‌دهند.
+                    </p>
+                    <ul class="list-disc list-inside mt-4 space-y-2 text-slate-300 marker:text-neon-blue">
+                        <li><strong>پیشرو (Leading):</strong> سیگنال را قبل از تغییر قیمت صادر می‌کنند.</li>
+                        <li><strong>تاخیردار (Lagging):</strong> پس از تثبیت روند سیگنال می‌دهند.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="md:col-span-5">
+                <div class="bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700">
+                    <h3 class="text-center text-neon-blue font-bold mb-4">مکانیزم عملکرد</h3>
+                    <div class="flex flex-col gap-2">
+                        <div class="bg-navy-700 p-3 rounded text-center border border-slate-600">داده خام</div>
+                        <div class="flex justify-center text-neon-pink text-xl">▼</div>
+                        <div class="bg-navy-900 p-3 rounded text-center border border-neon-pink font-mono text-neon-pink">فرمول ریاضی</div>
+                        <div class="flex justify-center text-neon-green text-xl">▼</div>
+                        <div class="bg-navy-700 p-3 rounded text-center border border-slate-600">سیگنال بصری</div>
                     </div>
                 </div>
-                <div class="lg:col-span-8 p-8 flex flex-col">
-                    <div id="aiOut" class="flex-1 overflow-y-auto max-h-[400px] prose prose-slate">
-                        <div class="flex flex-col items-center justify-center h-full text-slate-400 italic">
-                            
-                            <p class="mt-4">منتظر ورود داده‌ها برای تحلیل عمیق توسط Gemini...</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-8 bg-neon-green rounded"></div>
+                <h2 class="text-3xl font-bold text-white">اندیکاتورهای تعقیب روند</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="space-y-6">
+                    <div class="bg-navy-800 p-5 rounded-lg border-t-2 border-neon-green">
+                        <h3 class="text-xl font-bold text-neon-green mb-2">Moving Average</h3>
+                        <p class="text-slate-300 text-sm text-justify">
+                            میانگین قیمت در یک بازه زمانی مشخص. EMA سریع‌تر و SMA نرم‌تر عمل می‌کند.
+                        </p>
+                    </div>
+                    <div class="bg-navy-800 p-5 rounded-lg border-t-2 border-neon-green">
+                        <h3 class="text-xl font-bold text-neon-green mb-2">MACD</h3>
+                        <p class="text-slate-300 text-sm text-justify">
+                            ترکیبی از دو میانگین متحرک که قدرت و جهت روند را با خطوط و هیستوگرام نشان می‌دهد.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700 flex flex-col">
+                    <h3 class="text-lg font-bold text-white mb-4">مقایسه واکنش SMA و EMA</h3>
+                    <div class="chart-container flex-grow">
+                        <canvas id="maChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-8 bg-neon-pink rounded"></div>
+                <h2 class="text-3xl font-bold text-white">اسیلاتورها (نوسان‌گرها)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-7 bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700">
+                    <h3 class="text-lg font-bold text-white mb-4">شبیه‌سازی RSI</h3>
+                    <div class="chart-container">
+                        <canvas id="rsiChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 grid grid-cols-1 gap-4">
+                    <div class="bg-navy-800 p-4 rounded-lg border-l-4 border-neon-pink">
+                        <h4 class="text-lg font-bold text-neon-pink">RSI</h4>
+                        <p class="text-sm text-slate-300">شناسایی اشباع خرید و فروش در محدوده ۰ تا ۱۰۰.</p>
+                    </div>
+                    <div class="bg-navy-800 p-4 rounded-lg border-l-4 border-neon-pink">
+                        <h4 class="text-lg font-bold text-neon-pink">Stochastic</h4>
+                        <p class="text-sm text-slate-300">حساسیت بالاتر نسبت به RSI برای بازارهای رنج.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-8 bg-neon-blue rounded"></div>
+                <h2 class="text-3xl font-bold text-white">نوسان و حجم</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-navy-800 rounded-xl p-6 border border-navy-700">
+                    <h3 class="text-xl font-bold text-neon-blue mb-4">⚡ نوسان (Volatility)</h3>
+                    <div class="chart-container h-64">
+                        <canvas id="volatilityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-navy-800 rounded-xl p-6 border border-navy-700">
+                    <h3 class="text-xl font-bold text-neon-yellow mb-4">📊 حجم (Volume)</h3>
+                    <div class="bg-navy-900 p-4 rounded border border-navy-700 h-64 flex flex-col justify-end gap-1 relative overflow-hidden">
+                        <div class="flex items-end justify-between h-full gap-1">
+                            <div class="w-full bg-red-900/50 h-[40%] rounded-t"></div>
+                            <div class="w-full bg-green-900/50 h-[60%] rounded-t"></div>
+                            <div class="w-full bg-green-900/50 h-[30%] rounded-t"></div>
+                            <div class="w-full bg-red-900/50 h-[80%] rounded-t"></div>
+                            <div class="w-full bg-green-900/50 h-[90%] rounded-t"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Pattern Grid -->
-        <div class="mb-12">
-            <h2 class="text-3xl font-black text-slate-800 mb-2">کاتالوگ جامع الگوها</h2>
-            <p class="text-slate-500">تمامی الگوهای استاندارد (M/W) و الگوهای گسترشی</p>
-        </div>
-
-        <!-- Filter Tabs (Visual Only) -->
-        <div class="flex flex-wrap gap-2 mb-8">
-            <span class="px-4 py-2 bg-slate-200 text-slate-700 rounded-full text-sm font-bold">همه الگوها</span>
-            <span class="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold">کلاسیک</span>
-            <span class="px-4 py-2 bg-rose-50 text-rose-600 rounded-full text-sm font-bold">گسترشی</span>
-            <span class="px-4 py-2 bg-amber-50 text-amber-600 rounded-full text-sm font-bold">خاص</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="patternGrid">
-            <!-- Patterns will be generated here -->
-        </div>
-
-        <!-- Advanced Stats & Comparison -->
-        <section class="mt-20">
-             <div class="bg-white rounded-3xl p-8 shadow-xl">
-                 <h2 class="text-2xl font-bold mb-8">مقایسه دقت و بازدهی الگوها</h2>
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                     <div class="h-[400px]">
-                         <canvas id="compChart"></canvas>
-                     </div>
-                     <div>
-                         <h3 class="font-bold text-lg mb-4">جدول مرجع نسبت‌های طلایی</h3>
-                         <div class="overflow-x-auto">
-                             <table class="w-full text-sm text-right text-slate-500">
-                                 <thead class="text-xs text-slate-700 uppercase bg-slate-50">
-                                     <tr>
-                                         <th class="px-4 py-3">نام الگو</th>
-                                         <th class="px-4 py-3">نقطه B (XA)</th>
-                                         <th class="px-4 py-3">نقطه D (XA)</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody id="ratioTable">
-                                     <!-- Table rows -->
-                                 </tbody>
-                             </table>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </section>
+        <footer class="text-center text-slate-500 text-sm py-8 border-t border-navy-800">
+            <p>اینفوگرافیک جامع اندیکاتورهای تکنیکال | ۲۰۲۴</p>
+        </footer>
 
     </main>
 
     <script>
-        const apiKey = ""; 
-
-        // Comprehensive Pattern Database
-        const patterns = [
-            { name: "Gartley", b: "0.618", d: "0.786", type: "Classic", color: "#6366f1", points: [2, 10, 5, 8, 2] },
-            { name: "Bat", b: "0.382-0.50", d: "0.886", type: "Classic", color: "#3b82f6", points: [2, 10, 6, 8, 3] },
-            { name: "Butterfly", b: "0.786", d: "1.27-1.618", type: "Extension", color: "#f43f5e", points: [4, 10, 5, 9, 1] },
-            { name: "Crab", b: "0.382-0.618", d: "1.618", type: "Extension", color: "#ea580c", points: [5, 10, 6, 9, 0] },
-            { name: "Deep Crab", b: "0.886", d: "1.618", type: "Extension", color: "#9333ea", points: [6, 10, 7, 9, 0] },
-            { name: "Cypher", b: "0.382-0.618", d: "0.786", type: "Special", color: "#10b981", points: [4, 10, 3, 11, 4] },
-            { name: "Shark", b: "Overshoot", d: "0.886-1.13", type: "Special", color: "#06b6d4", points: [5, 8, 11, 4, 10] },
-            { name: "5-0 Pattern", b: "1.13-1.618", d: "0.50", type: "Special", color: "#84cc16", points: [2, 10, 1, 12, 6] },
-            { name: "AB=CD", b: "0.618", d: "1.00", type: "Classic", color: "#64748b", points: [10, 5, 8, 3] }, // Simplified
-            { name: "Three Drives", b: "0.618", d: "1.27", type: "Classic", color: "#f59e0b", points: [2, 8, 4, 10, 6, 12] }
-        ];
-
-        // UI: Generate Cards
-        const grid = document.getElementById('patternGrid');
-        const table = document.getElementById('ratioTable');
-
-        patterns.forEach(p => {
-            // Card
-            const card = document.createElement('div');
-            card.className = "pattern-card bg-white rounded-2xl p-5";
-            card.innerHTML = `
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="font-bold text-xl">${p.name}</h3>
-                        <span class="text-[10px] uppercase font-black px-2 py-0.5 bg-slate-100 rounded">${p.type}</span>
-                    </div>
-                    <button onclick="aiExplain('${p.name}')" class="text-indigo-600 text-xs font-bold hover:underline">تحلیل هوشمند ✨</button>
-                </div>
-                <div class="chart-container"><canvas id="canvas_${p.name.replace(/\s/g, '')}"></canvas></div>
-                <div class="mt-4 flex justify-between text-[11px] font-bold text-slate-500 border-t pt-3">
-                    <span>B: ${p.b}</span>
-                    <span>D: ${p.d}</span>
-                </div>
-            `;
-            grid.appendChild(card);
-
-            // Chart
-            new Chart(document.getElementById(`canvas_${p.name.replace(/\s/g, '')}`), {
-                type: 'line',
-                data: {
-                    labels: p.points.map((_, i) => i),
-                    datasets: [{
-                        data: p.points,
-                        borderColor: p.color,
-                        borderWidth: 3,
-                        pointRadius: 4,
-                        fill: false,
-                        tension: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { x: { display: false }, y: { display: false } }
+        function wrapLabel(label) {
+            const maxLen = 16;
+            if (label.length <= maxLen) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxLen) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
                 }
-            });
-
-            // Table Row
-            const row = document.createElement('tr');
-            row.className = "border-b hover:bg-slate-50";
-            row.innerHTML = `<td class="px-4 py-4 font-bold text-slate-900">${p.name}</td><td class="px-4 py-4">${p.b}</td><td class="px-4 py-4">${p.d}</td>`;
-            table.appendChild(row);
-        });
-
-        // AI Logic
-        async function callGemini(prompt) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: "You are a master of Harmonic Trading. You know all patterns (Gartley, Bat, Butterfly, Crab, Deep Crab, Shark, Cypher, 5-0, AB=CD, Three Drives, etc.). Provide professional analysis in Persian. Always suggest Entry, Stop Loss, and Take Profit levels." }] }
-            };
-
-            try {
-                const res = await fetch(url, { method: 'POST', body: JSON.stringify(payload) });
-                const data = await res.json();
-                return data.candidates?.[0]?.content?.parts?.[0]?.text || "خطا در دریافت پاسخ.";
-            } catch (e) { return "ارتباط با سرور برقرار نشد."; }
+            }
+            lines.push(currentLine);
+            return lines;
         }
 
-        async function aiExplain(name) {
-            const out = document.getElementById('aiOut');
-            out.innerHTML = `<div class="loading-dots text-xl font-bold py-10">Gemini در حال تحلیل الگوی ${name}</div>`;
-            const prompt = `Explain the ${name} pattern in detail. What are its psychological requirements in the market? Give a strategy for trading it. Answer in Persian.`;
-            const result = await callGemini(prompt);
-            out.innerHTML = `<div class="animate-in fade-in duration-700"><h3>تحلیل الگوی ${name}</h3>${result.replace(/\n/g, '<br>')}</div>`;
-        }
-
-        document.getElementById('btnAiScan').onclick = async () => {
-            const b = document.getElementById('inB').value;
-            const d = document.getElementById('inD').value;
-            const out = document.getElementById('aiOut');
-            if(!b || !d) return;
-
-            out.innerHTML = `<div class="loading-dots text-xl font-bold py-10 text-indigo-600 text-center">در حال اسکن پایگاه داده الگوهای هارمونیک</div>`;
-            const prompt = `A trader found a setup with B at ${b} and D at ${d} (relative to XA). Which harmonic pattern is this? Identify it precisely from the full list (Gartley, Bat, Butterfly, Crab, Deep Crab, Cypher, Shark, etc.) and give a risk/reward analysis in Persian.`;
-            const result = await callGemini(prompt);
-            out.innerHTML = result.replace(/\n/g, '<br>');
+        const commonTooltip = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    return Array.isArray(label) ? label.join(' ') : label;
+                }
+            }
         };
 
-        // Comparison Chart
-        new Chart(document.getElementById('compChart'), {
-            type: 'radar',
+        // MA Chart
+        const ctxMA = document.getElementById('maChart').getContext('2d');
+        new Chart(ctxMA, {
+            type: 'line',
             data: {
-                labels: ['دقت (Accuracy)', 'بازدهی (Profit)', 'فراوانی (Frequency)', 'ریسک (Risk)', 'اعتبار (Reliability)'],
+                labels: ['روز ۱', 'روز ۲', 'روز ۳', 'روز ۴', 'روز ۵', 'روز ۶', 'روز ۷', 'روز ۸'].map(l => wrapLabel(l)),
                 datasets: [
-                    { label: 'Gartley/Bat (کلاسیک)', data: [85, 70, 90, 40, 90], borderColor: '#6366f1', backgroundColor: '#6366f122' },
-                    { label: 'Crab/Butterfly (گسترشی)', data: [65, 95, 60, 80, 70], borderColor: '#f43f5e', backgroundColor: '#f43f5e22' }
+                    { label: 'Price', data: [100, 105, 110, 108, 115, 125, 120, 130], borderColor: '#fff', borderWidth: 2 },
+                    { label: 'EMA', data: [100, 103, 106, 107, 110, 118, 119, 124], borderColor: '#10b981', borderDash: [5, 5] },
+                    { label: 'SMA', data: [100, 101, 103, 105, 107, 110, 113, 116], borderColor: '#ec4899' }
                 ]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: { r: { font: { family: 'Vazirmatn' }, min: 0, max: 100 } },
-                plugins: { legend: { labels: { font: { family: 'Vazirmatn' } } } }
+            options: { 
+                responsive: true, maintainAspectRatio: false,
+                plugins: { tooltip: commonTooltip, legend: { labels: { color: '#94a3b8', font: {family: 'Vazirmatn'} } } }
             }
         });
 
+        // RSI Chart
+        const ctxRSI = document.getElementById('rsiChart').getContext('2d');
+        new Chart(ctxRSI, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 15}, (_, idx) => `کندل ${idx + 1}`).map(l => wrapLabel(l)),
+                datasets: [{
+                    label: 'RSI',
+                    data: [40, 45, 60, 75, 82, 70, 55, 40, 30, 25, 35, 50, 45, 60, 55],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true
+                }]
+            },
+            options: { 
+                responsive: true, maintainAspectRatio: false,
+                plugins: { tooltip: commonTooltip }
+            }
+        });
+
+        // Volatility Chart
+        const ctxVol = document.getElementById('volatilityChart').getContext('2d');
+        new Chart(ctxVol, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 10}, (_, idx) => `زمان ${idx + 1}`).map(l => wrapLabel(l)),
+                datasets: [
+                    { data: [110, 105, 103, 115, 130, 135, 125, 115, 110, 115], borderColor: '#10b981', pointRadius: 0, fill: false },
+                    { data: [90, 95, 97, 85, 70, 65, 75, 85, 90, 85], borderColor: '#10b981', pointRadius: 0, fill: '-1', backgroundColor: 'rgba(16, 185, 129, 0.1)' }
+                ]
+            },
+            options: { 
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
     </script>
 </body>
 </html>
