@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دایره‌المعارف اندیکاتورهای تکنیکال</title>
+    <title>اینفوگرافیک الگوهای هارمونیک در بورس</title>
+    
+    <!-- Fonts: Vazirmatn for Persian -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -25,17 +25,13 @@
                         sans: ['Vazirmatn', 'sans-serif'],
                     },
                     colors: {
-                        navy: {
-                            900: '#0f172a',
-                            800: '#1e293b',
-                            700: '#334155',
-                        },
-                        neon: {
-                            green: '#10b981',
-                            blue: '#3b82f6',
-                            pink: '#ec4899',
-                            purple: '#8b5cf6',
-                            yellow: '#f59e0b'
+                        brand: {
+                            dark: '#1e1b4b',   /* Deep Indigo */
+                            primary: '#4338ca', /* Indigo 700 */
+                            accent: '#f43f5e',  /* Rose 500 */
+                            success: '#10b981', /* Emerald 500 */
+                            info: '#3b82f6',    /* Blue 500 */
+                            light: '#e0e7ff',   /* Indigo 100 */
                         }
                     }
                 }
@@ -44,211 +40,260 @@
     </script>
 
     <style>
+        /* Chart Container Styling - Mandatory Requirements */
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 100%;
-            height: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            /* Base height */
+            height: 300px;
+            /* Max constraints */
+            max-width: 100%; 
             max-height: 400px;
-            margin: 0 auto;
         }
 
+        /* Responsive adjustments */
         @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        @media (min-width: 1024px) {
             .chart-container {
                 height: 400px;
             }
         }
 
-        .tree-node {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid #3b82f6;
-            color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            position: relative;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tree-node:hover {
-            transform: translateY(-2px);
-            border-color: #ec4899;
+        body {
+            background-color: #f8fafc;
+            color: #1f2937;
         }
 
-        .connector-v {
-            width: 2px;
-            background-color: #475569;
-            margin: 0 auto;
-        }
-
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a; 
+            background: #f1f1f1; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #4338ca; 
             border-radius: 4px;
         }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #312e81; 
+        }
     </style>
+    <!-- 
+    Color Palette: Vibrant Indigo & Rose
+    Narrative Plan:
+    1. Introduction to Harmonic Trading (Text)
+    2. Visualizing the "Big 4" Patterns (Gartley, Bat, Butterfly, Crab) -> Line Charts
+    3. Performance Statistics (Success Rates) -> Bar Chart
+    4. Frequency of Occurrence -> Donut Chart
+    5. Fibonacci Ratio Matrix -> Plotly Heatmap
+    6. Risk/Reward Analysis -> Bubble Chart
+    7. Conclusion
+    
+    NO SVG USED. NO MERMAID USED.
+    -->
 </head>
-<body class="bg-navy-900 text-slate-200 font-sans leading-relaxed selection:bg-neon-pink selection:text-white">
+<body class="font-sans antialiased">
 
-    <header class="bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border-b border-navy-700 sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-center md:text-right">
-                    <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-l from-neon-blue to-neon-green mb-2">
-                        دایره‌المعارف اندیکاتورها
-                    </h1>
-                    <p class="text-slate-400 text-sm md:text-base">
-                        راهنمای جامع تحلیل تکنیکال: از میانگین‌های متحرک تا اسیلاتورهای پیشرفته
-                    </p>
-                </div>
-                
-                <div class="flex gap-4 text-xs font-mono bg-navy-900 p-2 rounded-lg border border-navy-700">
-                    <div class="flex items-center gap-1"><span class="text-neon-green">●</span> روند</div>
-                    <div class="flex items-center gap-1"><span class="text-neon-pink">●</span> نوسان‌گر</div>
-                    <div class="flex items-center gap-1"><span class="text-neon-yellow">●</span> حجم</div>
-                </div>
-            </div>
+    <!-- Header Section -->
+    <header class="bg-gradient-to-l from-brand-dark to-brand-primary text-white shadow-lg">
+        <div class="container mx-auto px-4 py-12 text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight">الگوهای هارمونیک در بورس</h1>
+            <p class="text-xl md:text-2xl text-brand-light font-light max-w-3xl mx-auto leading-relaxed">
+                راهنمای جامع بصری برای معامله‌گری بر اساس اعداد فیبوناچی و ساختارهای هندسی قیمت
+            </p>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-8 space-y-16">
 
-        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            <div class="md:col-span-7 space-y-4">
-                <div class="bg-navy-800 p-6 rounded-xl border-r-4 border-neon-blue shadow-lg">
-                    <h2 class="text-2xl font-bold text-white mb-4">اندیکاتور چیست؟</h2>
-                    <p class="text-slate-300 text-justify">
-                        اندیکاتورها ابزارهای ریاضی هستند که بر اساس داده‌های گذشته بازار، اطلاعاتی را پردازش کرده و روی نمودار نمایش می‌دهند.
-                    </p>
-                    <ul class="list-disc list-inside mt-4 space-y-2 text-slate-300 marker:text-neon-blue">
-                        <li><strong>پیشرو (Leading):</strong> سیگنال را قبل از تغییر قیمت صادر می‌کنند.</li>
-                        <li><strong>تاخیردار (Lagging):</strong> پس از تثبیت روند سیگنال می‌دهند.</li>
-                    </ul>
+        <!-- Intro Section -->
+        <section class="bg-white rounded-2xl shadow-md p-8 border-r-8 border-brand-accent">
+            <h2 class="text-3xl font-bold text-brand-dark mb-6">هارمونیک تریدینگ چیست؟</h2>
+            <p class="text-lg text-gray-700 leading-8 mb-4">
+                معامله‌گری هارمونیک (Harmonic Trading) روشی است که از الگوهای هندسی خاص قیمت و نسبت‌های فیبوناچی برای تعیین نقاط احتمالی برگشت روند استفاده می‌کند. برخلاف روش‌های سنتی که بر شکست خطوط روند تمرکز دارند، الگوهای هارمونیک سعی در پیش‌بینی دقیق نقاط بازگشت (PRZ) دارند.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 text-center">
+                <div class="p-4 bg-indigo-50 rounded-xl">
+                    <div class="text-4xl font-bold text-brand-primary mb-2">XABCD</div>
+                    <div class="text-gray-600">ساختار ۵ نقطه‌ای</div>
                 </div>
-            </div>
-            <div class="md:col-span-5">
-                <div class="bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700">
-                    <h3 class="text-center text-neon-blue font-bold mb-4">مکانیزم عملکرد</h3>
-                    <div class="flex flex-col gap-2">
-                        <div class="bg-navy-700 p-3 rounded text-center border border-slate-600">داده خام</div>
-                        <div class="flex justify-center text-neon-pink text-xl">▼</div>
-                        <div class="bg-navy-900 p-3 rounded text-center border border-neon-pink font-mono text-neon-pink">فرمول ریاضی</div>
-                        <div class="flex justify-center text-neon-green text-xl">▼</div>
-                        <div class="bg-navy-700 p-3 rounded text-center border border-slate-600">سیگنال بصری</div>
-                    </div>
+                <div class="p-4 bg-pink-50 rounded-xl">
+                    <div class="text-4xl font-bold text-brand-accent mb-2">PRZ</div>
+                    <div class="text-gray-600">ناحیه پتانسیل بازگشتی</div>
+                </div>
+                <div class="p-4 bg-blue-50 rounded-xl">
+                    <div class="text-4xl font-bold text-brand-info mb-2">Fib</div>
+                    <div class="text-gray-600">نسبت‌های طلایی</div>
                 </div>
             </div>
         </section>
 
+        <!-- The 4 Main Patterns Visualization -->
         <section>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-2 h-8 bg-neon-green rounded"></div>
-                <h2 class="text-3xl font-bold text-white">اندیکاتورهای تعقیب روند</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div class="space-y-6">
-                    <div class="bg-navy-800 p-5 rounded-lg border-t-2 border-neon-green">
-                        <h3 class="text-xl font-bold text-neon-green mb-2">Moving Average</h3>
-                        <p class="text-slate-300 text-sm text-justify">
-                            میانگین قیمت در یک بازه زمانی مشخص. EMA سریع‌تر و SMA نرم‌تر عمل می‌کند.
-                        </p>
-                    </div>
-                    <div class="bg-navy-800 p-5 rounded-lg border-t-2 border-neon-green">
-                        <h3 class="text-xl font-bold text-neon-green mb-2">MACD</h3>
-                        <p class="text-slate-300 text-sm text-justify">
-                            ترکیبی از دو میانگین متحرک که قدرت و جهت روند را با خطوط و هیستوگرام نشان می‌دهد.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700 flex flex-col">
-                    <h3 class="text-lg font-bold text-white mb-4">مقایسه واکنش SMA و EMA</h3>
-                    <div class="chart-container flex-grow">
-                        <canvas id="maChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-2 h-8 bg-neon-pink rounded"></div>
-                <h2 class="text-3xl font-bold text-white">اسیلاتورها (نوسان‌گرها)</h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div class="lg:col-span-7 bg-navy-800 p-6 rounded-xl shadow-lg border border-navy-700">
-                    <h3 class="text-lg font-bold text-white mb-4">شبیه‌سازی RSI</h3>
-                    <div class="chart-container">
-                        <canvas id="rsiChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-5 grid grid-cols-1 gap-4">
-                    <div class="bg-navy-800 p-4 rounded-lg border-l-4 border-neon-pink">
-                        <h4 class="text-lg font-bold text-neon-pink">RSI</h4>
-                        <p class="text-sm text-slate-300">شناسایی اشباع خرید و فروش در محدوده ۰ تا ۱۰۰.</p>
-                    </div>
-                    <div class="bg-navy-800 p-4 rounded-lg border-l-4 border-neon-pink">
-                        <h4 class="text-lg font-bold text-neon-pink">Stochastic</h4>
-                        <p class="text-sm text-slate-300">حساسیت بالاتر نسبت به RSI برای بازارهای رنج.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-2 h-8 bg-neon-blue rounded"></div>
-                <h2 class="text-3xl font-bold text-white">نوسان و حجم</h2>
+            <div class="mb-10">
+                <h2 class="text-3xl font-bold text-brand-dark mb-4 border-b-2 border-gray-200 pb-2 inline-block">چهار الگوی اصلی هارمونیک</h2>
+                <p class="text-gray-600 mt-2 text-lg">
+                    این نمودارها ساختار هندسی ایده‎‌آل (Bullish) چهار الگوی اصلی را نشان می‌دهند. هر الگو قوانین فیبوناچی مختص به خود را دارد.
+                </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-navy-800 rounded-xl p-6 border border-navy-700">
-                    <h3 class="text-xl font-bold text-neon-blue mb-4">⚡ نوسان (Volatility)</h3>
-                    <div class="chart-container h-64">
-                        <canvas id="volatilityChart"></canvas>
+                
+                <!-- Gartley Pattern -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <h3 class="text-2xl font-bold text-brand-primary mb-2">الگوی گارتلی (Gartley)</h3>
+                    <p class="text-sm text-gray-500 mb-4">قدیمی‌ترین و شناخته‌شده‌ترین الگو. نقطه B دقیقا روی 0.618 اصلاح موج XA قرار می‌گیرد.</p>
+                    <div class="chart-container">
+                        <canvas id="chartGartley"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-between text-sm font-bold text-gray-600 bg-gray-50 p-2 rounded">
+                        <span>B: 0.618 XA</span>
+                        <span>D: 0.786 XA</span>
                     </div>
                 </div>
 
-                <div class="bg-navy-800 rounded-xl p-6 border border-navy-700">
-                    <h3 class="text-xl font-bold text-neon-yellow mb-4">📊 حجم (Volume)</h3>
-                    <div class="bg-navy-900 p-4 rounded border border-navy-700 h-64 flex flex-col justify-end gap-1 relative overflow-hidden">
-                        <div class="flex items-end justify-between h-full gap-1">
-                            <div class="w-full bg-red-900/50 h-[40%] rounded-t"></div>
-                            <div class="w-full bg-green-900/50 h-[60%] rounded-t"></div>
-                            <div class="w-full bg-green-900/50 h-[30%] rounded-t"></div>
-                            <div class="w-full bg-red-900/50 h-[80%] rounded-t"></div>
-                            <div class="w-full bg-green-900/50 h-[90%] rounded-t"></div>
-                        </div>
+                <!-- Bat Pattern -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <h3 class="text-2xl font-bold text-brand-info mb-2">الگوی خفاش (Bat)</h3>
+                    <p class="text-sm text-gray-500 mb-4">دقیق‌ترین الگو با نسبت ریسک به ریوارد عالی. نقطه D معمولا روی 0.886 موج XA تشکیل می‌شود.</p>
+                    <div class="chart-container">
+                        <canvas id="chartBat"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-between text-sm font-bold text-gray-600 bg-gray-50 p-2 rounded">
+                        <span>B: 0.382-0.50 XA</span>
+                        <span>D: 0.886 XA</span>
+                    </div>
+                </div>
+
+                <!-- Butterfly Pattern -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <h3 class="text-2xl font-bold text-brand-accent mb-2">الگوی پروانه (Butterfly)</h3>
+                    <p class="text-sm text-gray-500 mb-4">یک الگوی گسترشی (Extension) است. نقطه D فراتر از نقطه X می‌رود (سقف/کف جدید).</p>
+                    <div class="chart-container">
+                        <canvas id="chartButterfly"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-between text-sm font-bold text-gray-600 bg-gray-50 p-2 rounded">
+                        <span>B: 0.786 XA</span>
+                        <span>D: 1.27 XA</span>
+                    </div>
+                </div>
+
+                <!-- Crab Pattern -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <h3 class="text-2xl font-bold text-orange-600 mb-2">الگوی خرچنگ (Crab)</h3>
+                    <p class="text-sm text-gray-500 mb-4">شارپ‌ترین و قدرتمندترین حرکت‌ها را دارد. نقطه D بسیار دورتر از X تشکیل می‌شود (1.618).</p>
+                    <div class="chart-container">
+                        <canvas id="chartCrab"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-between text-sm font-bold text-gray-600 bg-gray-50 p-2 rounded">
+                        <span>B: 0.382-0.618 XA</span>
+                        <span>D: 1.618 XA</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Win Rate Chart -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="w-3 h-8 bg-brand-success rounded ml-2"></span>
+                    نرخ موفقیت الگوها (Win Rate)
+                </h3>
+                <p class="text-gray-600 mb-6 text-sm">
+                    این نمودار درصد موفقیت هر الگو در رسیدن به هدف اول (Target 1) را نشان می‌دهد. الگوی خفاش و سایفر معمولا بالاترین دقت را دارند.
+                </p>
+                <div class="chart-container">
+                    <canvas id="chartWinRate"></canvas>
+                </div>
+            </div>
+
+            <!-- Frequency Chart -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="w-3 h-8 bg-brand-primary rounded ml-2"></span>
+                    توزیع فراوانی در بازار
+                </h3>
+                <p class="text-gray-600 mb-6 text-sm">
+                    کدام الگوها را بیشتر در چارت می‌بینیم؟ گارتلی و AB=CD بیشترین تکرار را دارند.
+                </p>
+                <div class="chart-container">
+                    <canvas id="chartFrequency"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fibonacci Matrix (Plotly Heatmap) -->
+        <section class="bg-white p-6 rounded-2xl shadow-lg overflow-hidden">
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-brand-dark mb-2">ماتریس نسبت‌های فیبوناچی</h3>
+                <p class="text-gray-600">
+                    قلب تپنده الگوهای هارمونیک، رعایت دقیق این نسبت‌هاست. محور افقی نام الگو و محور عمودی بال‌های الگو (Legs) را نشان می‌دهد. رنگ‌های تیره‌تر نشان‌دهنده اهمیت و سخت‌گیری بیشتر در آن نسبت است.
+                </p>
+            </div>
+            <!-- Plotly Container needs specific handling for responsiveness -->
+            <div id="plotlyHeatmap" class="w-full h-[400px] md:h-[500px]"></div>
+        </section>
+
+        <!-- Risk vs Reward Section -->
+        <section class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 shadow-2xl text-white">
+            <div class="flex flex-col md:flex-row justify-between items-start mb-8">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold text-white mb-4">تحلیل ریسک به ریوارد (R:R)</h2>
+                    <p class="text-slate-300 leading-relaxed">
+                        الگوهای هارمونیک به دلیل داشتن نقطه توقف ضرر (Stop Loss) مشخص (کمی پایین‌تر از نقطه X یا D)، نسبت ریسک به ریوارد جذابی دارند. نمودار مقابل رابطه بین ریسک، پاداش احتمالی و اعتبار الگو را نمایش می‌دهد.
+                    </p>
+                    <ul class="mt-6 space-y-3 text-sm text-slate-400">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-brand-accent rounded-full ml-2"></span>محور عمودی: پتانسیل سود (Reward)</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-brand-info rounded-full ml-2"></span>محور افقی: ریسک معامله</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-brand-success rounded-full ml-2"></span>اندازه حباب: اعتبار الگو</li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 w-full mt-6 md:mt-0">
+                    <div class="chart-container bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                        <canvas id="chartRiskReward"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="text-center text-slate-500 text-sm py-8 border-t border-navy-800">
-            <p>اینفوگرافیک جامع اندیکاتورهای تکنیکال | ۲۰۲۴</p>
+        <!-- Footer/Conclusion -->
+        <footer class="text-center py-8 border-t border-gray-200 mt-12">
+            <h4 class="text-xl font-bold text-brand-primary mb-2">جمع‌بندی</h4>
+            <p class="max-w-2xl mx-auto text-gray-600 mb-6">
+                الگوهای هارمونیک ابزارهای قدرتمندی هستند، اما به تنهایی کافی نیستند. ترکیب این الگوها با پرایس اکشن، واگرایی در اندیکاتورها (RSI/MACD) و مدیریت سرمایه صحیح، کلید موفقیت در بورس است.
+            </p>
+            <div class="text-sm text-gray-400">
+                طراحی شده برای آموزش معامله‌گری هارمونیک | داده‌ها بر اساس منابع آموزشی استاندارد
+            </div>
         </footer>
 
     </main>
 
+    <!-- Script Section -->
     <script>
+        // --- Utility Functions ---
+
+        // 1. Label Wrapping Function (>16 chars)
         function wrapLabel(label) {
-            const maxLen = 16;
-            if (label.length <= maxLen) return label;
+            if (label.length <= 16) return label;
             const words = label.split(' ');
             const lines = [];
             let currentLine = words[0];
+
             for (let i = 1; i < words.length; i++) {
-                if (currentLine.length + 1 + words[i].length <= maxLen) {
-                    currentLine += ' ' + words[i];
+                if ((currentLine + " " + words[i]).length <= 16) {
+                    currentLine += " " + words[i];
                 } else {
                     lines.push(currentLine);
                     currentLine = words[i];
@@ -258,70 +303,248 @@
             return lines;
         }
 
-        const commonTooltip = {
-            callbacks: {
-                title: function(tooltipItems) {
-                    const item = tooltipItems[0];
-                    let label = item.chart.data.labels[item.dataIndex];
-                    return Array.isArray(label) ? label.join(' ') : label;
+        // 2. Common Chart Options (Responsiveness, Fonts, Tooltips)
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: { family: 'Vazirmatn', size: 12 }
+                    }
+                },
+                tooltip: {
+                    titleFont: { family: 'Vazirmatn', size: 14 },
+                    bodyFont: { family: 'Vazirmatn', size: 13 },
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
                 }
+            },
+            scales: {
+                x: { ticks: { font: { family: 'Vazirmatn' } } },
+                y: { ticks: { font: { family: 'Vazirmatn' } } }
             }
         };
 
-        // MA Chart
-        const ctxMA = document.getElementById('maChart').getContext('2d');
-        new Chart(ctxMA, {
-            type: 'line',
-            data: {
-                labels: ['روز ۱', 'روز ۲', 'روز ۳', 'روز ۴', 'روز ۵', 'روز ۶', 'روز ۷', 'روز ۸'].map(l => wrapLabel(l)),
-                datasets: [
-                    { label: 'Price', data: [100, 105, 110, 108, 115, 125, 120, 130], borderColor: '#fff', borderWidth: 2 },
-                    { label: 'EMA', data: [100, 103, 106, 107, 110, 118, 119, 124], borderColor: '#10b981', borderDash: [5, 5] },
-                    { label: 'SMA', data: [100, 101, 103, 105, 107, 110, 113, 116], borderColor: '#ec4899' }
-                ]
-            },
-            options: { 
-                responsive: true, maintainAspectRatio: false,
-                plugins: { tooltip: commonTooltip, legend: { labels: { color: '#94a3b8', font: {family: 'Vazirmatn'} } } }
-            }
-        });
+        // --- Data & Chart Initialization ---
 
-        // RSI Chart
-        const ctxRSI = document.getElementById('rsiChart').getContext('2d');
-        new Chart(ctxRSI, {
-            type: 'line',
+        // 1. PATTERN VISUALIZATIONS (Line Charts simulating shapes)
+        // Data points are normalized approximations to create the visual "M" shape
+        
+        const createPatternChart = (ctxId, color, dataPoints, label) => {
+            const ctx = document.getElementById(ctxId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['X', 'A', 'B', 'C', 'D'],
+                    datasets: [{
+                        label: label,
+                        data: dataPoints,
+                        borderColor: color,
+                        backgroundColor: color + '33', // Add transparency
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: color,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        fill: true,
+                        tension: 0 // Straight lines for geometric patterns
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    plugins: {
+                        legend: { display: false }, // Hide legend for cleaner look
+                        tooltip: {
+                            ...commonOptions.plugins.tooltip,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'نقطه ' + context.label; 
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { font: { size: 14, weight: 'bold' } } },
+                        y: { display: false, min: 0, max: 12 } // Hide Y axis for pure shape visualization
+                    }
+                }
+            });
+        };
+
+        // Initialize Pattern Charts
+        // Coordinates (Y-axis) approximated to resemble the ratio geometry
+        createPatternChart('chartGartley', '#4f46e5', [2, 10, 5, 8, 2], 'الگوی گارتلی'); // B ~ 61.8% of XA
+        createPatternChart('chartBat', '#3b82f6', [2, 10, 6, 8, 3], 'الگوی خفاش'); // B < 50%, D lower
+        createPatternChart('chartButterfly', '#db2777', [4, 10, 5, 9, 1], 'الگوی پروانه'); // D extends below X
+        createPatternChart('chartCrab', '#ea580c', [5, 10, 6, 9, 0], 'الگوی خرچنگ'); // D extends significantly below X
+
+        // 2. WIN RATE CHART (Bar)
+        const ctxWinRate = document.getElementById('chartWinRate').getContext('2d');
+        const labelsWinRate = ['الگوی خفاش (Bat)', 'الگوی گارتلی (Gartley)', 'الگوی سایفر (Cypher)', 'الگوی خرچنگ (Crab)', 'الگوی پروانه (Butterfly)'];
+        const processedLabelsWin = labelsWinRate.map(wrapLabel);
+
+        new Chart(ctxWinRate, {
+            type: 'bar',
             data: {
-                labels: Array.from({length: 15}, (_, idx) => `کندل ${idx + 1}`).map(l => wrapLabel(l)),
+                labels: processedLabelsWin,
                 datasets: [{
-                    label: 'RSI',
-                    data: [40, 45, 60, 75, 82, 70, 55, 40, 30, 25, 35, 50, 45, 60, 55],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true
+                    label: 'درصد موفقیت (Win Rate)',
+                    data: [82, 72, 78, 65, 68],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)', // Bat - Blue
+                        'rgba(79, 70, 229, 0.8)',  // Gartley - Indigo
+                        'rgba(16, 185, 129, 0.8)', // Cypher - Emerald
+                        'rgba(234, 88, 12, 0.8)',  // Crab - Orange
+                        'rgba(219, 39, 119, 0.8)'  // Butterfly - Pink
+                    ],
+                    borderRadius: 8,
+                    borderWidth: 0
                 }]
             },
-            options: { 
-                responsive: true, maintainAspectRatio: false,
-                plugins: { tooltip: commonTooltip }
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { callback: (value) => value + '%' }
+                    }
+                }
             }
         });
 
-        // Volatility Chart
-        const ctxVol = document.getElementById('volatilityChart').getContext('2d');
-        new Chart(ctxVol, {
-            type: 'line',
+        // 3. FREQUENCY CHART (Donut)
+        const ctxFreq = document.getElementById('chartFrequency').getContext('2d');
+        const labelsFreq = ['Gartley', 'Bat', 'AB=CD', 'Butterfly', 'سایر الگوها'];
+        const processedLabelsFreq = labelsFreq.map(wrapLabel);
+
+        new Chart(ctxFreq, {
+            type: 'doughnut',
             data: {
-                labels: Array.from({length: 10}, (_, idx) => `زمان ${idx + 1}`).map(l => wrapLabel(l)),
-                datasets: [
-                    { data: [110, 105, 103, 115, 130, 135, 125, 115, 110, 115], borderColor: '#10b981', pointRadius: 0, fill: false },
-                    { data: [90, 95, 97, 85, 70, 65, 75, 85, 90, 85], borderColor: '#10b981', pointRadius: 0, fill: '-1', backgroundColor: 'rgba(16, 185, 129, 0.1)' }
-                ]
+                labels: processedLabelsFreq,
+                datasets: [{
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: ['#4f46e5', '#3b82f6', '#06b6d4', '#db2777', '#9ca3af'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
             },
-            options: { 
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: false } }
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    legend: { position: 'bottom', labels: { font: { family: 'Vazirmatn' } } }
+                }
             }
         });
+
+        // 4. PLOTLY HEATMAP (Fibonacci Ratios)
+        // No SVG used, rendering optimized for Canvas/WebGL implicitly via Plotly defaults
+        
+        const zValues = [
+            [0.618, 0.382, 1.27, 0.786], // Gartley
+            [0.382, 0.886, 1.618, 0.886], // Bat
+            [0.786, 0.382, 1.618, 1.27], // Butterfly
+            [0.382, 0.886, 2.618, 1.618]  // Crab
+        ];
+
+        const xValues = ['نقطه B (اصلاح XA)', 'نقطه C (اصلاح AB)', 'تصویر BC', 'نقطه D (نسبت XA)'].map(l => l.length > 20 ? l.substring(0, 18)+"..." : l);
+        const yValues = ['Gartley', 'Bat', 'Butterfly', 'Crab'];
+
+        const heatmapData = [{
+            z: zValues,
+            x: xValues,
+            y: yValues,
+            type: 'heatmap',
+            colorscale: 'Viridis',
+            hoverongaps: false,
+            hovertemplate: 'الگو: %{y}<br>بخش: %{x}<br>نسبت فیبو: %{z}<extra></extra>'
+        }];
+
+        const heatmapLayout = {
+            font: { family: 'Vazirmatn', size: 12 },
+            margin: { t: 30, l: 80, r: 30, b: 50 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            xaxis: { side: 'bottom' },
+            autosize: true
+        };
+        
+        const config = { responsive: true, displayModeBar: false };
+
+        Plotly.newPlot('plotlyHeatmap', heatmapData, heatmapLayout, config);
+
+
+        // 5. RISK/REWARD BUBBLE CHART
+        const ctxRisk = document.getElementById('chartRiskReward').getContext('2d');
+        
+        new Chart(ctxRisk, {
+            type: 'bubble',
+            data: {
+                datasets: [
+                    {
+                        label: 'Gartley',
+                        data: [{x: 2, y: 3, r: 20}], // Moderate Risk, Moderate Reward, High Reliability
+                        backgroundColor: 'rgba(79, 70, 229, 0.7)'
+                    },
+                    {
+                        label: 'Bat',
+                        data: [{x: 1.5, y: 4, r: 25}], // Low Risk, High Reward, Very High Reliability
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)'
+                    },
+                    {
+                        label: 'Crab',
+                        data: [{x: 3, y: 5, r: 15}], // Higher Risk (Sharp moves), Huge Reward, Moderate Reliability
+                        backgroundColor: 'rgba(234, 88, 12, 0.7)'
+                    },
+                    {
+                        label: 'Butterfly',
+                        data: [{x: 2.5, y: 3.5, r: 18}], // Mod Risk, Good Reward
+                        backgroundColor: 'rgba(219, 39, 119, 0.7)'
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    legend: { labels: { color: '#cbd5e1', font: { family: 'Vazirmatn' } } },
+                    tooltip: {
+                        callbacks: {
+                            title: function() { return ''; }, // Reset title logic for bubble
+                            label: function(context) {
+                                return context.dataset.label + ': ریسک ' + context.raw.x + ' | ریوارد ' + context.raw.y;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'ریسک (فاصله تا استاپ)', color: '#94a3b8', font: { family: 'Vazirmatn' } },
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' },
+                        min: 0, max: 4
+                    },
+                    y: {
+                        title: { display: true, text: 'ریوارد (پتانسیل سود)', color: '#94a3b8', font: { family: 'Vazirmatn' } },
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' },
+                        min: 0, max: 6
+                    }
+                }
+            }
+        });
+
     </script>
 </body>
 </html>
